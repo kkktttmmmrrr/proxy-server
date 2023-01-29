@@ -7,7 +7,7 @@ const url = require('url');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 500,
+  max: 10000,
 });
 
 app.use(limiter);
@@ -15,14 +15,13 @@ app.use(limiter);
 app.get('/', (req, res) => {
   res.send('This is my proxy server');
 });
-
-app.use('/js-weather-data', (req, res, next) => {
+app.use('/weather-data', (req, res, next) => {
   const city = url.parse(req.url).query;
   createProxyMiddleware({
-    target: `${process.env.BASE_API_URL_JS_WEATHERAPI}${city}&aqi=no`,
+    target: `${process.env.BASE_API_URL_WEATHERAPI}${city}&aqi=no`,
     changeOrigin: true,
     pathRewrite: {
-      [`^"/js-weather-data`]: '',
+      [`^"/weather-data`]: '',
     },
   })(req, res, next);
 });
