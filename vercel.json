@@ -18,14 +18,10 @@
   ],
   "builds": [
     {
-      "src": "index.js",
-      "use": "@vercel/node"
+      "src": "api/index.js",
+      "use": "@vercel/node",
+      "config": { "runtime": "nodejs22.x" }
     }
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/$1" }]
 }
